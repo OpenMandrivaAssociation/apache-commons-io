@@ -12,16 +12,16 @@ Source0:          http://archive.apache.org/dist/commons/%{base_name}/source/%{s
 BuildArch:        noarch
 
 BuildRequires:    java-devel >= 0:1.6.0
-BuildRequires:    jpackage-utils
+BuildRequires:    jpackage-utils >= 0:1.7.5
 BuildRequires:    junit4
 BuildRequires:    maven
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    apache-commons-parent
 
 Requires:         java >= 0:1.6.0
-Requires:         jpackage-utils
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
+Requires:         jpackage-utils >= 0:1.7.5
+Requires(post):   jpackage-utils >= 0:1.7.5
+Requires(postun): jpackage-utils >= 0:1.7.5
 
 # This should go away with F-17
 Provides:         jakarta-%{short_name} = %{version}-%{release}
@@ -35,7 +35,7 @@ to assist with developing IO functionality.
 %package javadoc
 Summary:          API documentation for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
+Requires:         jpackage-utils >= 0:1.7.5
 
 Obsoletes:        jakarta-%{short_name}-javadoc <= 0:1.4
 
