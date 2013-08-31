@@ -2,8 +2,8 @@
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
-Version:          2.0.1
-Release:          5
+Version:          2.4
+Release:          1
 Summary:          Utilities to assist with developing IO functionality
 License:          ASL 2.0
 Group:            Development/Java
@@ -14,8 +14,7 @@ BuildArch:        noarch
 BuildRequires:    java-devel >= 0:1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    junit4
-BuildRequires:    maven
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    ant
 BuildRequires:    apache-commons-parent
 
 Requires:         java >= 0:1.6.0
@@ -48,7 +47,7 @@ sed -i 's/\r//' *.txt
 
 %build
 
-mvn-local install javadoc:javadoc
+ant dist -Dcomponent.version=%{version}
 
 %install
 
@@ -68,7 +67,7 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %pre javadoc
 # workaround for rpm bug, can be removed in F-17
