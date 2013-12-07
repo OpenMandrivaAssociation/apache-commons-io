@@ -3,7 +3,7 @@
 
 Name:             apache-%{short_name}
 Version:          2.4
-Release:          1
+Release:          2
 Summary:          Utilities to assist with developing IO functionality
 License:          ASL 2.0
 Group:            Development/Java
