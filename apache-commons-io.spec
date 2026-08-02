@@ -1,6 +1,6 @@
 Name:           apache-commons-io
 Epoch:          1
-Version:        2.20.0
+Version:        2.22.0
 Release:        1
 Summary:        Utilities to assist with developing IO functionality
 License:        Apache-2.0
@@ -18,7 +18,7 @@ file filters, and endian classes. It is a library of utilities
 to assist with developing IO functionality.
 
 %prep
-%autosetup -p1 -C
+%autosetup -p1 -C -n commons-io-2.22.0-src
 
 sed -i 's/\r//' *.txt
 
