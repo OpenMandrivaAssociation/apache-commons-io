@@ -1,57 +1,24 @@
-Name:           apache-commons-io
-Epoch:          1
-Version:        2.22.0
-Release:        1
-Summary:        Utilities to assist with developing IO functionality
-License:        Apache-2.0
-URL:            https://commons.apache.org/proper/commons-io/
-BuildArch:      noarch
+Name:		apache-commons-io
+Epoch:		1
+Version:	2.22.0
+Release:	1
+Summary:	Utilities for stream, file, and writer I/O
+Group:		Development/Java
+License:	ASL 2.0
+URL:		https://commons.apache.org/proper/commons-io/
+Source0:	https://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
 
-Source0:        https://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
-
-BuildRequires:  javapackages-bootstrap
-BuildRequires:  jurand
+BuildArch:	noarch
+BuildRequires:	mvn(org.apache.commons:commons-parent:pom:)
+BuildSystem:	maven
+BuildOption(install):	--file-name commons-io --link %{name} --alias commons-io:commons-io
 
 %description
-Commons-IO contains utility classes, stream implementations,
-file filters, and endian classes. It is a library of utilities
-to assist with developing IO functionality.
+Apache Commons IO is a library of utilities to assist with developing
+IO functionality.
 
 %prep
-%autosetup -p1 -C -n commons-io-2.22.0-src
-
-sed -i 's/\r//' *.txt
-
-# Run tests in multiple reusable forks to improve test performance
-sed -i -e /reuseForks/d -e /forkCount/d pom.xml
-sed -i '/<argLine>/d' pom.xml
-
-%mvn_file : commons-io %{name}
-%mvn_alias : org.apache.commons:
-
-%pom_remove_dep org.junit-pioneer:junit-pioneer
-%java_remove_annotations src -s -n DefaultLocale
-
-%pom_remove_dep com.google.jimfs:jimfs
-rm src/test/java/org/apache/commons/io/input/ReversedLinesFileReaderParamFileTest.java
-rm src/test/java/org/apache/commons/io/file/PathUtilsContentEqualsTest.java
-
-%build
-# See "-DcommonsIoVersion" in maven-surefire for the tested version
-
-# The following tests fail on tmpfs/nfs:
-#  * PathUtilsDeleteDirectoryTest.testDeleteDirectory1FileSize0OverrideReadOnly:80->testDeleteDirectory1FileSize0:68 » FileSystem
-#  * PathUtilsDeleteFileTest.testDeleteReadOnlyFileDirectory1FileSize1:114 » FileSystem
-#  * PathUtilsDeleteFileTest.testSetReadOnlyFileDirectory1FileSize1:134 » FileSystem
-#  * PathUtilsDeleteTest.testDeleteDirectory1FileSize0OverrideReadonly:97->testDeleteDirectory1FileSize0:69 » FileSystem
-#  * PathUtilsDeleteTest.testDeleteDirectory1FileSize1OverrideReadOnly:145->testDeleteDirectory1FileSize1:117 » FileSystem
-
-# moditect profile generates module-info.class
-%mvn_build -j -f -- -Dcommons.osgi.symbolicName=org.apache.commons.io
-
-%install
-%mvn_install
+%setup -q -n commons-io-%{version}-src
 
 %files -f .mfiles
-%license LICENSE.txt NOTICE.txt
-%doc RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
