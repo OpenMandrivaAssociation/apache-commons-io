@@ -9,7 +9,7 @@ URL:		https://commons.apache.org/proper/commons-io/
 Source0:	https://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
 
 BuildArch:	noarch
-BuildRequires:	mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:	mvn(org.apache.commons:commons-parent:pom::)
 # Literal, so the first rpmbuild -bs records them before sysjar is installed.
 BuildRequires:	maven
 BuildRequires:	java-current-devel
